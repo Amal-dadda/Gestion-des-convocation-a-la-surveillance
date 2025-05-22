@@ -29,17 +29,6 @@ CREATE TABLE surveillants (
     updated_at TIMESTAMP NULL
 );
 
-CREATE TABLE sessions (
-    id VARCHAR(255) PRIMARY KEY,
-    user_id BIGINT UNSIGNED,
-    ip_address VARCHAR(45),
-    user_agent TEXT,
-    payload LONGTEXT NOT NULL,
-    last_activity INT NOT NULL,
-    INDEX (user_id),
-    INDEX (last_activity)
-);
-
 CREATE TABLE examen_surveillant (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     examen_id BIGINT UNSIGNED NOT NULL,
