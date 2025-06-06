@@ -17,18 +17,10 @@ Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.
 Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
 
-// dashboard protégé
-// Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-// Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
-// Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
-
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-
-    // Autres routes protégées ici
 });
 
 
@@ -37,7 +29,6 @@ Route::middleware(['auth'])->group(function () {
 
 Route::resource('filieres', FiliereController::class);
 
-//suite admine
 Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
@@ -67,9 +58,6 @@ Route::put('/examens/{id}', [ExamenController::class, 'update'])->name('examens.
 Route::delete('/examens/{id}', [ExamenController::class, 'destroy'])->name('examens.destroy');
 
 // Surveillants
-// Route::get('/examens/{id}/surveillants', [ExamenController::class, 'ajouterSurveillant'])->name('examens.surveillants');
-// Route::post('/examens/{id}/surveillants', [ExamenController::class, 'storeSurveillant'])->name('examens.surveillants.store');
-
 Route::get('/examens/{id}/surveillants', [App\Http\Controllers\ExamenController::class, 'surveillants'])->name('examens.surveillants');
 Route::post('/examens/{id}/surveillants/ajouter', [App\Http\Controllers\ExamenController::class, 'ajouterSurveillants'])->name('examens.surveillants.ajouter');
 Route::delete('/examens/{id}/surveillants/{surveillantId}', [App\Http\Controllers\ExamenController::class, 'supprimerSurveillant'])->name('examens.surveillants.supprimer');
@@ -77,47 +65,20 @@ Route::delete('/examens/{id}/surveillants/{surveillantId}', [App\Http\Controller
 
 
 //survaillant
-
 Route::get('/examens/{id}/ajouter-surveillant', [ExamenController::class, 'ajouterSurveillant'])->name('examens.ajouterSurveillant');
 Route::post('/examens/{id}/store-surveillant', [ExamenController::class, 'storeSurveillant'])->name('examens.storeSurveillant');
-
 Route::resource('surveillants', SurveillantController::class);
 
-
-
-
-
 ///route pour surveillant
-
 Route::resource('surveillants', \App\Http\Controllers\SurveillantController::class)->only([
     'index', 'create', 'store', 'destroy'
 ]);
-
-
-
-
-
-
-
-// Route::resource('surveillants', SurveillantController::class);
-
-// Route::get('/examens/{id}/surveillants', [ExamenController::class, 'surveillants'])->name('examens.surveillants');
-
-
-// //creat surveillant
-
-// Route::get('/surveillants/create', [SurveillantController::class, 'create'])->name('surveillants.create');
-
 
 
 //users
 Route::resource('users', UserController::class);
 
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
-
-
-
-
 
 
 // Afficher les surveillants assignés à un examen
@@ -128,8 +89,6 @@ Route::post('/examens/{id}/surveillants', [ExamenController::class, 'ajouterSurv
 
 // Supprimer un surveillant affecté à un examen
 Route::delete('/examens/{id}/surveillants/{surveillantId}', [ExamenController::class, 'supprimerSurveillant'])->name('examens.surveillants.supprimer');
-
-
 
 //Gestion des Notes
 Route::get('/dashboard/notes', [NoteController::class, 'index'])->name('notes.index');
